@@ -16,6 +16,7 @@ import CampaignIcon from '@mui/icons-material/Campaign';
 import CalculateIcon from '@mui/icons-material/Calculate';
 import RouterIcon from '@mui/icons-material/Router';
 import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined';
+import HistoryIcon from '@mui/icons-material/History';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useTranslation } from '../../common/components/LocalizationProvider';
@@ -151,6 +152,12 @@ const SettingsMenu = () => {
                   link="/settings/device-tuning"
                   icon={<TuneOutlinedIcon />}
                   selected={location.pathname === '/settings/device-tuning'}
+                />
+                <MenuItem
+                  title={t('relayCommandHistory')}
+                  link="/settings/relay-history"
+                  icon={<HistoryIcon />}
+                  selected={location.pathname === '/settings/relay-history'}
                 />
                 <MenuItem
                   title={t('settingsServer')}
