@@ -10,6 +10,11 @@ export default defineConfig(() => ({
     proxy: {
       '/api/socket': 'ws://localhost:8082',
       '/api': 'http://localhost:8082',
+      '/relay/api': {
+        target: 'http://localhost:3090',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/relay\/api/, '/api'),
+      },
     },
   },
   build: {

@@ -59,6 +59,8 @@ const UserConnectionsPage = lazy(() => import('./settings/UserConnectionsPage'))
 const LogsPage = lazy(() => import('./reports/LogsPage'));
 const SharePage = lazy(() => import('./settings/SharePage'));
 const AnnouncementPage = lazy(() => import('./settings/AnnouncementPage'));
+const InitialProvisioningPage = lazy(() => import('./settings/InitialProvisioningPage'));
+const DeviceTuningPage = lazy(() => import('./settings/DeviceTuningPage'));
 const EmulatorPage = lazy(() => import('./other/EmulatorPage'));
 const StreamPage = lazy(() => import('./other/StreamPage'));
 const AuditPage = lazy(() => import('./reports/AuditPage'));
@@ -141,6 +143,8 @@ const Navigation = () => {
             <Route path=":type/:id/share" element={<SharePage />} />
             <Route path="accumulators/:deviceId" element={<AccumulatorsPage />} />
             <Route path="announcement" element={<AnnouncementPage />} />
+            <Route path="initial-provisioning" element={<InitialProvisioningPage />} />
+            <Route path="device-tuning" element={<DeviceTuningPage />} />
             <Route path="calendars" element={<CalendarsPage />} />
             <Route path="calendar/:id" element={<CalendarPage />} />
             <Route path="calendar" element={<CalendarPage />} />

@@ -656,5 +656,19 @@
     "categoryVan": "Van",
     "categoryScooter": "Scooter",
     "maintenanceStart": "Start",
-    "maintenancePeriod": "Period"
+    "maintenancePeriod": "Period",
+    "relayInitialProvisioning": "Initial Provisioning",
+    "relayInitialProvisioningHint": "Factory bootstrap over Hologram SMS (4 second spacing). Device must exist in Traccar with IMEI as uniqueId.",
+    "relayHologramAttributeHint": "Set device attribute hologramDeviceId to the numeric Hologram device ID before provisioning or offline tuning.",
+    "relayDeviceImei": "Target device ID / IMEI",
+    "relayAdminPhone": "Admin master phone number",
+    "relayInitializeUnit": "Initialize unit",
+    "relayProvisionSuccess": "Provisioning sequence completed via SMS.",
+    "relayDeviceTuning": "Device tuning",
+    "relaySelectDevice": "Device",
+    "relayCommandOptions": "Configuration commands",
+    "relayMultiSelectHint": "Hold Ctrl (Cmd on Mac) to select multiple commands.",
+    "relayQueueSettings": "Queue settings",
+    "relayQueuedSms": "Sent {count} command(s) via Hologram SMS.",
+    "relayQueuedTcp": "Queued {count} command(s) for paced TCP delivery."
 }
