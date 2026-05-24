@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Alert,
   Box,
   Button,
+  Chip,
   Container,
+  FormControl,
+  InputLabel,
   LinearProgress,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from '@mui/material';
@@ -19,13 +24,29 @@ import relayFetch from '../common/util/relayApi';
 const InitialProvisioningPage = () => {
   const t = useTranslation();
   const { classes } = useSettingsStyles();
-  const [imei, setImei] = useState('');
+  const [devices, setDevices] = useState([]);
+  const [deviceId, setDeviceId] = useState('');
   const [adminPhone, setAdminPhone] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
   const [result, setResult] = useState(null);
 
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await relayFetch('/devices');
+        setDevices(await response.json());
+      } catch (e) {
+        setError(e.message || String(e));
+      }
+    })();
+  }, []);
+
+  const selectedDevice = devices.find((d) => String(d.id) === String(deviceId));
+  const imei = selectedDevice?.uniqueId ?? '';
+
   const handleInitialize = useCatchCallback(async () => {
+    if (!imei || !adminPhone.trim()) return;
     setBusy(true);
     setError(null);
     setResult(null);
@@ -54,13 +75,42 @@ const InitialProvisioningPage = () => {
         <Alert severity="info" sx={{ mb: 2 }}>
           {t('relayHologramAttributeHint')}
         </Alert>
-        <TextField
-          fullWidth
-          margin="normal"
-          label={t('relayDeviceImei')}
-          value={imei}
-          onChange={(e) => setImei(e.target.value)}
-        />
+
+        <FormControl fullWidth margin="normal">
+          <InputLabel>{t('relaySelectDevice')}</InputLabel>
+          <Select
+            value={deviceId}
+            label={t('relaySelectDevice')}
+            onChange={(e) => setDeviceId(e.target.value)}
+          >
+            {devices.map((device) => (
+              <MenuItem key={device.id} value={device.id}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, width: '100%' }}>
+                  <span>{device.name}</span>
+                  <Typography variant="caption" color="text.secondary">
+                    {device.uniqueId}
+                  </Typography>
+                  {!device.hologramDeviceId && (
+                    <Chip size="small" label={t('relayNoHologramId')} color="warning" />
+                  )}
+                </Box>
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        {selectedDevice && (
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+            {t('relayProvisionImei')}: <strong>{selectedDevice.uniqueId}</strong>
+          </Typography>
+        )}
+
+        {selectedDevice && !selectedDevice.hologramDeviceId && (
+          <Alert severity="warning" sx={{ mb: 1 }}>
+            {t('relayHologramAttributeHint')}
+          </Alert>
+        )}
+
         <TextField
           fullWidth
           margin="normal"
@@ -88,7 +138,12 @@ const InitialProvisioningPage = () => {
         <Button
           variant="contained"
           color="primary"
-          disabled={busy || !imei.trim() || !adminPhone.trim()}
+          disabled={
+            busy
+            || !deviceId
+            || !adminPhone.trim()
+            || !selectedDevice?.hologramDeviceId
+          }
           onClick={handleInitialize}
           startIcon={<SettingsIcon />}
           sx={{ mt: 2 }}
