@@ -14,6 +14,9 @@ import HelpIcon from '@mui/icons-material/Help';
 import PaymentIcon from '@mui/icons-material/Payment';
 import CampaignIcon from '@mui/icons-material/Campaign';
 import CalculateIcon from '@mui/icons-material/Calculate';
+import RouterIcon from '@mui/icons-material/Router';
+import TuneOutlinedIcon from '@mui/icons-material/TuneOutlined';
+import HistoryIcon from '@mui/icons-material/History';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useTranslation } from '../../common/components/LocalizationProvider';
@@ -137,12 +140,32 @@ const SettingsMenu = () => {
               selected={location.pathname === '/settings/announcement'}
             />
             {admin && (
-              <MenuItem
-                title={t('settingsServer')}
-                link="/settings/server"
-                icon={<SettingsIcon />}
-                selected={location.pathname === '/settings/server'}
-              />
+              <>
+                <MenuItem
+                  title={t('relayInitialProvisioning')}
+                  link="/settings/initial-provisioning"
+                  icon={<RouterIcon />}
+                  selected={location.pathname === '/settings/initial-provisioning'}
+                />
+                <MenuItem
+                  title={t('relayDeviceTuning')}
+                  link="/settings/device-tuning"
+                  icon={<TuneOutlinedIcon />}
+                  selected={location.pathname === '/settings/device-tuning'}
+                />
+                <MenuItem
+                  title={t('relayCommandHistory')}
+                  link="/settings/relay-history"
+                  icon={<HistoryIcon />}
+                  selected={location.pathname === '/settings/relay-history'}
+                />
+                <MenuItem
+                  title={t('settingsServer')}
+                  link="/settings/server"
+                  icon={<SettingsIcon />}
+                  selected={location.pathname === '/settings/server'}
+                />
+              </>
             )}
             <MenuItem
               title={t('settingsUsers')}

@@ -10,6 +10,11 @@ export default defineConfig(() => ({
     proxy: {
       '/api/socket': 'ws://localhost:8082',
       '/api': 'http://localhost:8082',
+      '/relay/api': {
+        target: 'http://localhost:3090',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/relay\/api/, '/api'),
+      },
     },
   },
   build: {
@@ -21,7 +26,7 @@ export default defineConfig(() => ({
     VitePWA({
       includeAssets: ['favicon.ico', 'apple-touch-icon-180x180.png'],
       workbox: {
-        navigateFallbackDenylist: [/^\/api/],
+        navigateFallbackDenylist: [/^\/api/, /^\/relay/],
         globPatterns: ['**/*.{js,css,html,woff,woff2,mp3}'],
       },
       manifest: {
